@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>{% block title %}StaffConnect{% endblock %}</title>
+
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
+
+    <body>
+
+        <header>
+            <nav class="navbar">
+                <a href="{% url 'posts:home' %}" class="brand">StaffConnect</a>
+
+                <div class="nav-links">
+                    {% if user.is_authenticated %}
+                    {% else %}
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+        <main class="container">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <footer class="footer">
+            <p>&copy; {% now "Y" %} StaffConnect. All rights reserved.</p>
+        </footer>
+
+    </body>
+
+</html>
