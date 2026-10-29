@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Login | StaffConnect{% endblock %}
+
+{% block content %}
+<section class="form-card">
+    <h1>Log in</h1>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        {{ form.as_p }}
+        <button type="submit" class="button">Log in</button>
+    </form>
+    <p>New here? <a href="{% url 'users:register' %}">Create an account</a></p>
+</section>
+{% endblock %}

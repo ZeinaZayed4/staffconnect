@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }} | StaffConnect{% endblock %}
+
+{% block content %}
+<section class="form-card" style="text-align: center;">
+    <img src="{{ profile.avatar_url }}" alt="{{ user.username }}'s avatar" class="avatar">
+    <h1>{{ user.username }}</h1>
+    <p>{{ profile.get_department_display }}</p>
+    <p>{{ profile.bio|default:"No bio yet." }}</p>
+</section>
+{% endblock %}
