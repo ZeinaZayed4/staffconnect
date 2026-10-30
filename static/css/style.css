@@ -305,3 +305,18 @@ form > ul:not(.errorlist) {
 form > ul:not(.errorlist) li {
     margin-bottom: 0.15rem;
 }
+
+.post-body {
+    margin: 1rem 0;
+}
+
+.post-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.post-actions form {
+    margin: 0;
+}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | StaffConnect{% endblock %}
+
+{% block content %}
+<article class="post-card">
+    <h1>{{ post.title }}</h1>
+
+    <div class="post-meta">
+        <span>By {{ post.author.username }}</span>
+        <span>{{ post.created_at|date:"F j, Y, H:i" }}</span>
+    </div>
+
+    <div class="post-body">
+        {{ post.body|linebreaks }}
+
+        {% if request.user == post.author %}
+        <div class="post-actions">
+            <a href="{% url 'posts:post_update' slug=post.slug %}" class="button">Edit</a>
+            <form method="post" action="{% url 'posts:post_delete' slug=post.slug %}"
+                onsubmit="return confirm('Delete this announcement? This cannot be undone.');">
+                {% csrf_token %}
+                <button type="submit" class="button danger">Delete</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</article>
+
+<p><a href="{% url 'posts:home' %}">&larr; Back to announcement</a></p>
+{% endblock %}
