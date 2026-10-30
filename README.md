@@ -15,7 +15,7 @@ Built with Django 4.2, SQLite (development), and Docker.
 ## Local setup (Python 3.11)
 
 ```bash
-git clone https://github.com/ZeinaZayed4/staff-connect.git
+git clone https://github.com/ZeinaZayed4/staffconnect.git
 cd staffconnect
 python3.11 -m venv .venv
 source .venv/bin/activate
