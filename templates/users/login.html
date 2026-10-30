@@ -11,6 +11,7 @@
         {{ form.as_p }}
         <button type="submit" class="button">Log in</button>
     </form>
+    <p><a href="{% url 'users:password_reset' %}">Forgot your password?</a></p>
     <p>New here? <a href="{% url 'users:register' %}">Create an account</a></p>
 </section>
 {% endblock %}
