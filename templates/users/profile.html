@@ -5,8 +5,10 @@
 {% block content %}
 <section class="form-card" style="text-align: center;">
     <img src="{{ profile.avatar_url }}" alt="{{ user.username }}'s avatar" class="avatar">
-    <h1>{{ user.username }}</h1>
+    <h1>{{ user.get_full_name|default:user.username }}</h1>
+    <p>@{{ user.username }}</p>
     <p>{{ profile.get_department_display }}</p>
     <p>{{ profile.bio|default:"No bio yet." }}</p>
+    <a href="{% url 'users:edit_profile' %}" class="button">Edit profile</a>
 </section>
 {% endblock %}

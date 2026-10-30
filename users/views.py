@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
-from .forms import RegisterForm
+from .forms import RegisterForm, ProfileForm, UserForm
 
 
 def register(request):
@@ -57,3 +57,37 @@ def logout_view(request):
 @login_required
 def profile(request):
     return render(request, "users/profile.html", {"profile": request.user.profile})
+
+@login_required
+def edit_profile(request):
+    profile = request.user.profile
+    old_avatar = profile.avatar.name
+
+    if request.method == "POST":
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = ProfileForm(request.POST, request.FILES, instance=profile)
+        user_ok = user_form.is_valid()
+        profile_ok = profile_form.is_valid()
+
+        if user_ok and profile_ok:
+            try:
+                user_form.save()
+                profile_form.save()
+            except OSError:
+                messages.error(request, "We could not save your changes. Please try again later.")
+            else:
+                new_avatar = profile.avatar.name
+                if old_avatar and old_avatar != new_avatar:
+                    try:
+                        profile.avatar.storage.delete(old_avatar)
+                    except OSError:
+                        pass
+                messages.success(request, "Your profile has been updated.")
+                return redirect("users:profile")
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = ProfileForm(instance=profile)
+
+    return render(request, "users/edit_profile.html", {"user_form": user_form, "profile_form": profile_form})

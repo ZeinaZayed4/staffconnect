@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.templatetags.static import static
+from .validators import validate_avatar_extension, validate_avatar_size
 
 
 class Profile(models.Model):
@@ -24,7 +25,7 @@ class Profile(models.Model):
         default=Department.OTHER,
     )
     bio = models.TextField(blank=True)
-    avatar = models.ImageField(upload_to="avatars/", blank=True)
+    avatar = models.ImageField(upload_to="avatars/", blank=True, validators=[validate_avatar_extension, validate_avatar_size])
 
     def __str__(self):
         return f"{self.user.username}'s profile"
